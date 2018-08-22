@@ -1,10 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CardValidator.Domain.Entities;
+using CardValidator.Domain.Interfaces;
+using CV.Infrastructure.Database;
 
 namespace CV.Infrastructure.Repositories
 {
-    class PaymentRepository
+    public class PaymentRepository : EfRepository<Card>, IPaymentRepository
     {
+        public PaymentRepository(ContextBase context) : base(context)
+        {
+        }
+
+        public bool IsCardNumberExist(string cardNumber)
+        {
+            // TODO: Added stored proc call
+            throw new System.NotImplementedException();
+        }
     }
 }
