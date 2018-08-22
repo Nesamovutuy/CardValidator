@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CV.Infrastructure.Data.EntityConfigurations
+namespace CV.Infrastructure.Database.EntityConfigurations
 {
     class CardEntityTypeConfiguration : IEntityTypeConfiguration<Card>
     {

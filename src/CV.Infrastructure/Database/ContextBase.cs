@@ -1,0 +1,18 @@
+﻿using CardValidator.Domain.Entities;
+using CV.Infrastructure.Database.EntityConfigurations;
+using Microsoft.EntityFrameworkCore;
+
+namespace CV.Infrastructure.Database
+{
+    public class ContextBase : DbContext
+    {
+        private ContextBase(DbContextOptions<ContextBase> options) : base(options) { }
+
+        public DbSet<Card> Cards { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new CardEntityTypeConfiguration());
+        }
+    }
+}
