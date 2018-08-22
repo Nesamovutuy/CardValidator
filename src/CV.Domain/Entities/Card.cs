@@ -2,6 +2,6 @@
 {
     public class Card : BaseEntity
     {
-        public string CardNumber { get; private set; }
+        public string CardNumber { get; set; }
     }
 }

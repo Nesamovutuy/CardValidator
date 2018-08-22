@@ -1,7 +1,14 @@
-﻿namespace CardValidator.Domain.Interfaces
+﻿using CardValidator.Domain.Entities;
+using System.Collections.Generic;
+
+namespace CardValidator.Domain.Interfaces
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : BaseEntity
     {
-        IUnitOfWork UnitOfWork { get; }
+        T GetById(int id);
+        IEnumerable<T> ListAll();
+        T Add(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }
