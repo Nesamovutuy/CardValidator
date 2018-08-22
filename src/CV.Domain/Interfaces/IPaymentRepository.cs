@@ -2,7 +2,7 @@
 
 namespace CardValidator.Domain.Interfaces
 {
-    public interface IPaymentService : IRepository<Card>
+    public interface IPaymentRepository : IRepository<Card>
     {
         bool IsCardNumberExist(string cardNumber);
     }

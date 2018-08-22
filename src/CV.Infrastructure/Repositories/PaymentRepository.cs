@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CV.Infrastructure.Services
+namespace CV.Infrastructure.Repositories
 {
-    class PaymentService
+    class PaymentRepository
     {
     }
 }
