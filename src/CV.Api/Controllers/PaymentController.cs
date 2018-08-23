@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CardValidator.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CV.Api.Controllers
@@ -7,11 +8,21 @@ namespace CV.Api.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+        private readonly IPaymentRepository _paymentRepository;
+        private readonly IAppLogger<PaymentController> _logger;
+
+        public PaymentController(IPaymentRepository paymentRepository, IAppLogger<PaymentController> logger)
+        {
+            _paymentRepository = paymentRepository;
+            _logger = logger;
+        }
+
         // GET api/payment
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            string num = "2014269757902178";
+            return Ok(_paymentRepository.IsCardNumberExists(num));
         }
 
         // POST api/payment/card
