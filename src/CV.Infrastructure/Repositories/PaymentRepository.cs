@@ -10,7 +10,7 @@ namespace CV.Infrastructure.Repositories
         {
         }
 
-        public bool IsCardNumberExist(string cardNumber)
+        public bool IsCardNumberExists(string cardNumber)
         {
             // TODO: Added stored proc call
             throw new System.NotImplementedException();
