@@ -6,7 +6,7 @@ namespace CV.Infrastructure.Database
 {
     public class ContextBase : DbContext
     {
-        private ContextBase(DbContextOptions<ContextBase> options) : base(options) { }
+        public ContextBase(DbContextOptions<ContextBase> options) : base(options) { }
 
         public DbSet<Card> Cards { get; set; }
 

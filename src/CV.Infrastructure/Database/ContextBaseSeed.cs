@@ -1,4 +1,5 @@
 ﻿using CardValidator.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,7 @@ namespace CV.Infrastructure.Database
             int retryForAvailability = retry.Value;
             try
             {
-                // TODO: Only run this if using a real database
-                // context.Database.Migrate();
+                context.Database.Migrate();
 
                 if (!context.Cards.Any())
                 {
