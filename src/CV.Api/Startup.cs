@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CardValidator.Domain.Interfaces;
+using CV.Infrastructure.Database;
+using CV.Infrastructure.Logging;
+using CV.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace CV.Api
 {
@@ -25,6 +23,20 @@ namespace CV.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string sqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ContextBase>(options =>
+            {
+                options.UseSqlServer(sqlConnectionString);
+                //options.UseInMemoryDatabase("CardValidator");
+            });
+
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
