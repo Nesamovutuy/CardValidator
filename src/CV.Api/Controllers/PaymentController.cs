@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-using CardValidator.Domain.Interfaces;
+﻿using CardValidator.Domain.Interfaces;
+using CV.Api.ViewModels;
+using CV.Infrastructure.Resources;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace CV.Api.Controllers
 {
@@ -17,18 +19,45 @@ namespace CV.Api.Controllers
             _logger = logger;
         }
 
-        // GET api/payment
-        [HttpGet]
-        public IActionResult Get()
+        // POST api/payment/card
+        [HttpPost("[action]")]
+        public IActionResult Card([FromBody] CardViewModel model)
         {
-            string num = "2014269757902178";
-            return Ok(_paymentRepository.IsCardNumberExists(num));
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning(ModelState.ToString());
+                return BadRequest(ModelState);
+            }
+
+            if (!_paymentRepository.IsCardNumberExists(model.Number))
+            {
+                return NotFound();
+            }
+
+            string type = GetCardType(model.Number).ToString();
+
+            return Ok(new { CardType = type });
         }
 
-        // POST api/payment/card
-        [HttpPost("card")]
-        public void Post([FromBody] string value)
+        // TODO: Move from controller
+        private CardType GetCardType(string cardNumber)
         {
+            CardTypeInfo[] _cardTypeInfo =
+            {
+                new CardTypeInfo("^(5)", 16, CardType.MasterCard),
+                new CardTypeInfo("^(4)", 16, CardType.Visa),
+                new CardTypeInfo("^(3)", 15, CardType.Amex),
+                new CardTypeInfo("^(3)", 16, CardType.JCB)
+            };
+
+            foreach (CardTypeInfo info in _cardTypeInfo)
+            {
+                if (cardNumber.Length == info.Length &&
+                    Regex.IsMatch(cardNumber, info.RegEx))
+                    return info.Type;
+            }
+
+            return CardType.Unknown;
         }
     }
 }
