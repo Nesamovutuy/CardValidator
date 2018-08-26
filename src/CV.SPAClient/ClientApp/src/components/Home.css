@@ -5,6 +5,9 @@
 
 .expr-inputs {
     display: inline-flex;
+}
+
+.expr-inputs-width {
     min-width: 100px;
     max-width: 100px;
 }

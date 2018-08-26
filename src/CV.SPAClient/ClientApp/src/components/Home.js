@@ -70,9 +70,9 @@ export class Home extends Component {
             <span class="input-group-text" id="inputGroup-sizing-sm">Expiry Date</span>
           </div>
           <div class="expr-inputs">
-            <input ref={(ref) => {this.exprMonth = ref}} type="number" min="1" max="12" class="form-control" placeholder="MM" />
+            <input ref={(ref) => {this.exprMonth = ref}} type="number" min="1" max="12" class="form-control expr-inputs-width" placeholder="MM" />
             <span class="separator">/</span>
-            <input ref={(ref) => {this.exprYear = ref}} type="number" min={(new Date().getFullYear())} class="form-control" placeholder="YYYY" />
+            <input ref={(ref) => {this.exprYear = ref}} type="number" min={(new Date().getFullYear())} class="form-control expr-inputs-width" placeholder="YYYY" />
           </div>
         </div>
         <button type="button" class="btn btn-primary btn-margin" onClick={this.validate}>Validate</button>
