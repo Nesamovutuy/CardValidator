@@ -55,6 +55,11 @@ namespace CV.Api
                 app.UseHsts();
             }
 
+            app.UseCors(builder =>
+                builder.WithOrigins(Configuration["ClientUrl"])
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             // Enable the Swagger UI middleware and the Swagger generator
