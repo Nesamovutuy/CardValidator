@@ -8,13 +8,14 @@ namespace CV.Infrastructure.Database.Migrations
         {
             string sp = @"
                 CREATE PROCEDURE [dbo].[IsCardNumberExists]
-	                @number nvarchar(16)
+	                @number nvarchar(16),
+					@isExist bit OUTPUT
                 AS
 	                IF EXISTS(SELECT * FROM [dbo].[Cards] WHERE CardNumber = @number)
-		                SELECT 1
+		                SELECT @isExist = 1
 	                ELSE
-		                SELECT 0
-                GO";
+		                SELECT @isExist = 0
+                RETURN 0";
             migrationBuilder.Sql(sp);
         }
 

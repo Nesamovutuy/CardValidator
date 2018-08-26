@@ -15,12 +15,21 @@ namespace CV.Infrastructure.Repositories
 
         public bool IsCardNumberExists(string cardNumber)
         {
-            SqlParameter param = new SqlParameter("@number", SqlDbType.NVarChar)
+            SqlParameter number = new SqlParameter("@number", SqlDbType.NVarChar)
             {
                 Value = cardNumber
             };
 
-            return _context.Database.ExecuteSqlCommand("exec IsCardNumberExists @number", param) == 1; // if 1 is exists
+            SqlParameter isExists = new SqlParameter
+            {
+                ParameterName = "@isExist",
+                SqlDbType = SqlDbType.Bit,
+                Direction = ParameterDirection.Output
+            };
+
+            _context.Database.ExecuteSqlCommand("IsCardNumberExists @number, @isExist OUT", number, isExists);
+
+            return (bool)isExists.Value;
         }
     }
 }
