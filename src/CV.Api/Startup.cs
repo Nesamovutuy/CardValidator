@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NJsonSchema;
+using NSwag.AspNetCore;
+using System.Reflection;
 
 namespace CV.Api
 {
@@ -53,6 +56,21 @@ namespace CV.Api
             }
 
             app.UseHttpsRedirection();
+
+            // Enable the Swagger UI middleware and the Swagger generator
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
+
+                settings.PostProcess = document =>
+                {
+                    // TODO: Move strings to appsettings
+                    document.Info.Version = "v1";
+                    document.Info.Title = "CardValidator API";
+                };
+            });
+
             app.UseMvc();
         }
     }
