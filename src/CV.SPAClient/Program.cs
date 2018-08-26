@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace CV.SPAClient
 {
@@ -19,6 +12,8 @@ namespace CV.SPAClient
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                // TODO: Move to config
+                .UseUrls("http://localhost:5000", "https://localhost:5001")
                 .UseStartup<Startup>();
     }
 }

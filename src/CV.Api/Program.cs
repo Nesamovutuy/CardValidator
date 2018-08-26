@@ -34,6 +34,8 @@ namespace CV.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                // TODO: Move to config
+                .UseUrls("http://localhost:6000", "https://localhost:6001")
                 .UseStartup<Startup>();
     }
 }
