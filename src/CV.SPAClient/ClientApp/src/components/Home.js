@@ -11,7 +11,8 @@ export class Home extends Component {
   }
 
   validate() {
-    fetch('api/Payment/Card', {
+    // TODO: Move backend url to env config
+    fetch('https://localhost:6001/api/Payment/Card', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
