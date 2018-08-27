@@ -37,8 +37,9 @@ namespace CV.Api
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
-
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+            services.AddCors();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -57,8 +58,8 @@ namespace CV.Api
 
             app.UseCors(builder =>
                 builder.WithOrigins(Configuration["ClientUrl"])
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
 
             app.UseHttpsRedirection();
 
